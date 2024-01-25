@@ -1,7 +1,17 @@
 <template>
-  <v-container> </v-container>
+  <v-container> <CompanieCard /> </v-container>
 </template>
 
-<script></script>
+<script>
+import CompanieCard from "@/components/OurCompanies.vue";
+export default {
+  components: {
+    CompanieCard,
+  },
+  data() {
+    return {};
+  },
+};
+</script>
 
 <style></style>
