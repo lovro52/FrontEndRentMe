@@ -36,9 +36,6 @@
             >
               Forgot password?
             </v-btn>
-            <div v-if="currentUser">
-              <p>Logged in as: {{ currentUser.email }}</p>
-            </div>
           </v-card-text>
           <v-card-actions class="card-actions">
             <v-btn @click="login" :disabled="isButtonDisabled" outlined>
@@ -103,7 +100,6 @@ export default {
   },
   data() {
     return {
-      currentUser: null,
       emailForPassword: null,
       passwordIssuesDialog: false,
       isButtonDisabled: false,

@@ -67,7 +67,7 @@
 
 <script>
 export default {
-  name: "RegistrationView",
+  name: "RegisterView",
   components: {},
   watch: {
     valid: function (isValid) {
@@ -92,6 +92,17 @@ export default {
           "E-mail must be valid",
       },
     };
+  },
+  methods: {
+    clearFormData() {
+      this.firstName = null;
+      this.lastName = null;
+      this.email = null;
+      this.password = null;
+    },
+  },
+  postActionMoveToView() {
+    this.$router.push({ path: "/home" });
   },
 };
 </script>

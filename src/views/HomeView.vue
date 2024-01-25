@@ -1,21 +1,21 @@
 <template>
-  <div>
-    <label for="example-datepicker">Choose a date</label>
-    <b-form-datepicker
-      id="example-datepicker"
-      v-model="value"
-      class="mb-2"
-    ></b-form-datepicker>
-    <p>Value: '{{ value }}'</p>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col>
+        <v-card> <Calendar /> </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
+import Calendar from "@/components/Calendar.vue";
 export default {
+  components: {
+    Calendar,
+  },
   data() {
-    return {
-      value: "",
-    };
+    return {};
   },
 };
 </script>
