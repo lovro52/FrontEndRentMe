@@ -4,22 +4,8 @@
       <v-toolbar-title>Nekretnine4U</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn color="white" rounded class="my-2" text to="/">Home</v-btn>
-      <v-btn
-        color="white"
-        rounded
-        class="my-2"
-        v-if="!currentUser"
-        text
-        to="/login"
-        >Login</v-btn
-      >
-      <v-btn
-        color="white"
-        rounded
-        class="my-2"
-        v-if="!currentUser"
-        text
-        to="/register"
+      <v-btn color="white" rounded class="my-2" text to="/login">Login</v-btn>
+      <v-btn color="white" rounded class="my-2" text to="/register"
         >Register</v-btn
       >
       <v-btn color="white" rounded class="my-2" text to="/profile"

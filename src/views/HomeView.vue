@@ -1,15 +1,21 @@
 <template>
-  <hello-world />
+  <div>
+    <label for="example-datepicker">Choose a date</label>
+    <b-form-datepicker
+      id="example-datepicker"
+      v-model="value"
+      class="mb-2"
+    ></b-form-datepicker>
+    <p>Value: '{{ value }}'</p>
+  </div>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
-
-  export default {
-    name: 'Home',
-
-    components: {
-      HelloWorld,
-    },
-  }
+export default {
+  data() {
+    return {
+      value: "",
+    };
+  },
+};
 </script>

@@ -89,12 +89,6 @@
 </template>
 
 <script>
-import {
-  auth,
-  sendPasswordResetEmail,
-  signInWithEmailAndPassword,
-} from "../firebase";
-
 export default {
   name: "LoginView",
   components: {},
@@ -131,35 +125,6 @@ export default {
     login() {
       let email = this.email;
       let password = this.password;
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          this.currentUser = auth.currentUser;
-          this.$router.push("/");
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    },
-    resetPassword(email) {
-      sendPasswordResetEmail(auth, email)
-        .then(() => {
-          console.log("Email sent");
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
-        });
-      this.closeDialog();
-    },
-    postActionMoveToView() {
-      this.$router.push({ path: "/" });
-    },
-    closeDialog() {
-      this.passwordIssuesDialog = false;
-    },
-    openDialog() {
-      this.passwordIssuesDialog = true;
     },
   },
   created() {},

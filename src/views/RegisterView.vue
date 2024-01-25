@@ -66,13 +66,6 @@
 </template>
 
 <script>
-import {
-  doc,
-  auth,
-  db,
-  setDoc,
-  createUserWithEmailAndPassword,
-} from "../firebase.js";
 export default {
   name: "RegistrationView",
   components: {},
@@ -99,49 +92,6 @@ export default {
           "E-mail must be valid",
       },
     };
-  },
-  created() {},
-  mounted() {},
-  destroyed() {},
-  methods: {
-    clearFormData() {
-      this.firstName = null;
-      this.lastName = null;
-      this.email = null;
-      this.password = null;
-    },
-    postActionMoveToView() {
-      this.$router.push({ path: "/home" });
-    },
-    async saveAdditionalData(user, email, firstName, lastName) {
-      await setDoc(doc(db, "users", email), {
-        Email: email,
-        FirstName: firstName,
-        LastName: lastName,
-        AuthorisationType: "USER",
-      });
-    },
-    registerUser() {
-      debugger;
-      const email = this.email;
-      const password = this.password;
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          debugger;
-          // Signed in
-          const user = userCredential.user;
-          const firstName = this.firstName;
-          const lastName = this.lastName;
-          this.saveAdditionalData(user, email, firstName, lastName);
-          this.postActionMoveToView();
-        })
-        .catch((error) => {
-          debugger;
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(error, errorCode, errorMessage);
-        });
-    },
   },
 };
 </script>
