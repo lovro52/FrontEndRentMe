@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="pozadina">
     <div class="main">
       <v-container>
         <v-row>
@@ -13,25 +13,23 @@
     </div>
     <div class="wave"></div>
     <v-container class="odabir">
-      <div>
-        <v-row>
-          <v-col>
-            <v-card>
-              <v-card-title>Motori</v-card-title>
-            </v-card>
-          </v-col>
-          <v-col>
-            <v-card>
-              <v-card-title>Auti</v-card-title>
-            </v-card>
-          </v-col>
-          <v-col>
-            <v-card>
-              <v-card-title>Kamioni</v-card-title>
-            </v-card>
-          </v-col>
-        </v-row>
-      </div>
+      <v-row>
+        <v-col>
+          <v-card>
+            <v-card-title>Motori</v-card-title>
+          </v-card>
+        </v-col>
+        <v-col>
+          <v-card>
+            <v-card-title>Auti</v-card-title>
+          </v-card>
+        </v-col>
+        <v-col>
+          <v-card>
+            <v-card-title>Kamioni</v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-container>
   </v-app>
 </template>
@@ -52,9 +50,9 @@ export default {
 .odabir {
   margin-top: 5%;
 }
-/* .pozadina {
-  background-color: coral;
-} */
+.pozadina {
+  background-color: teal;
+}
 body {
   overflow-x: hidden;
   margin: 0;
@@ -63,7 +61,7 @@ body {
 .main {
   width: 100%;
   height: 500px;
-  background-color: coral;
+  background-color: #e7f6fc;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -98,7 +96,7 @@ body {
   position: relative;
   height: 40px;
   width: 100%;
-  background: coral;
+  background: #e7f6fc;
   transform: scale(1, 1.5);
 }
 
@@ -109,7 +107,7 @@ body {
   border-radius: 100%;
   width: 100%;
   height: 300px;
-  background-color: white;
+  background-color: teal;
   right: -25%;
   top: 20px;
 }
@@ -121,7 +119,7 @@ body {
   border-radius: 100%;
   width: 100%;
   height: 300px;
-  background-color: coral;
+  background-color: #e7f6fc;
   left: -25%;
   top: -240px;
   clip-path: ellipse(100% 15% at -15% 100%);

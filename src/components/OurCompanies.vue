@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="izgled">
     <v-row>
       <!-- Left side with the car image -->
       <v-col cols="4">
@@ -45,5 +45,7 @@ export default {
 </script>
 
 <style scoped>
-/* Add any custom styling here if needed */
+.izgled {
+  margin: 5%;
+}
 </style>

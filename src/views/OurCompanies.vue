@@ -1,8 +1,10 @@
 <template>
-  <v-container>
-    <row><CompanieCard /></row>
-    <row><CompanieCard /></row>
-  </v-container>
+  <v-app class="pozadina">
+    <v-container>
+      <row><CompanieCard /></row>
+      <row><CompanieCard /></row>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
@@ -17,4 +19,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.pozadina {
+  /* Lighter coral color with reduced RGB values */
+  background-color: #e7f6fc;
+}
+</style>
