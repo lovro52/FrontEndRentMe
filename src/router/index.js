@@ -4,6 +4,7 @@ import HomeView from "../views/HomeView.vue";
 import RegisterView from "../views/RegisterView";
 import LoginView from "../views/LoginView";
 import OurCompanies from "../views/OurCompanies";
+import OurVozila from "../views/OurVozilaView";
 Vue.use(VueRouter);
 
 const routes = [
@@ -35,6 +36,11 @@ const routes = [
     path: "/OurCompanies",
     name: "OurCompanies",
     component: OurCompanies,
+  },
+  {
+    path: "/OurVozila",
+    name: "OurVozila",
+    component: OurVozila,
   },
 ];
 

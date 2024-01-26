@@ -1,18 +1,26 @@
 <template>
   <v-container>
-    <!-- Vehicle selection with Vuetify MDI Icons -->
-    <div class="d-flex align-center mb-2">
-      <div class="mr-2">
-        <v-icon @click="selectVehicle('car')">mdi-car</v-icon>
-      </div>
-      <div class="mr-2">
-        <v-icon @click="selectVehicle('van')">mdi-bus</v-icon>
-      </div>
-      <div>
-        <v-icon @click="selectVehicle('motorcycle')">mdi-bike</v-icon>
-      </div>
-    </div>
-
+    <v-row>
+      <v-col>
+        <div class="naslov">Iznajmite vozilo već danas</div>
+      </v-col>
+      <v-divider vertical></v-divider>
+      <v-col>
+        <!-- Vehicle selection with Vuetify MDI Icons -->
+        <div class="d-flex align-center mb-2">
+          <div class="mr-2">
+            <v-icon @click="selectVehicle('car')">mdi-car</v-icon>
+          </div>
+          <div class="mr-2">
+            <v-icon @click="selectVehicle('van')">mdi-bus</v-icon>
+          </div>
+          <div>
+            <v-icon @click="selectVehicle('motorcycle')">mdi-bike</v-icon>
+          </div>
+        </div>
+      </v-col>
+    </v-row>
+    <v-divider class="custom-divider"></v-divider>
     <!-- Datepickers Section -->
     <div class="d-flex justify-space-around">
       <!-- First Datepicker Section -->
@@ -75,3 +83,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.custom-divider {
+  border-top: 3px solid teal; /* Adjust the thickness as needed */
+}
+.pozadina {
+  background-color: teal;
+}
+</style>

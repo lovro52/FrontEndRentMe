@@ -1,15 +1,14 @@
 <template>
   <v-container>
-    <row><CompanieCard /></row>
-    <row><CompanieCard /></row>
+    <row><VozilaCard /></row>
   </v-container>
 </template>
 
 <script>
-import CompanieCard from "@/components/OurCompanies.vue";
+import VozilaCard from "@/components/Vozila.vue";
 export default {
   components: {
-    CompanieCard,
+    VozilaCard,
   },
   data() {
     return {};
