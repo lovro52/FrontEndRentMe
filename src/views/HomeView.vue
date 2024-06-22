@@ -4,9 +4,22 @@
       <v-container>
         <v-row>
           <v-col>
-            <v-card>
-              <Calendar />
+            <h2 class="text-title">
+              Najam vozila - Pretražite, usporedite i uštedite
+            </h2>
+            <v-card class="calendar-card">
+              <Calendar
+                @update:startDate="setStartDate"
+                @update:endDate="setEndDate"
+              />
             </v-card>
+          </v-col>
+        </v-row>
+        <v-row v-if="startDate && endDate" class="mt-4">
+          <v-col>
+            <v-btn color="primary" @click="viewAvailableVehicles">
+              View Available Vehicles
+            </v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -15,18 +28,47 @@
     <v-container class="odabir">
       <v-row>
         <v-col>
-          <v-card>
-            <v-card-title>Motori</v-card-title>
+          <v-card
+            class="vehicle-card"
+            @click="viewVehiclesByType('car')"
+            @mouseover="hoverCard($event)"
+            @mouseleave="resetCard($event)"
+          >
+            <v-img src="../assets/car2.jpg" aspect-ratio="1.7"></v-img>
+            <v-card-title>Car</v-card-title>
           </v-card>
         </v-col>
         <v-col>
-          <v-card>
-            <v-card-title>Auti</v-card-title>
+          <v-card
+            class="vehicle-card"
+            @click="viewVehiclesByType('suv')"
+            @mouseover="hoverCard($event)"
+            @mouseleave="resetCard($event)"
+          >
+            <v-img src="../assets/SUV.jpg" aspect-ratio="1.7"></v-img>
+            <v-card-title>SUV</v-card-title>
           </v-card>
         </v-col>
         <v-col>
-          <v-card>
-            <v-card-title>Kamioni</v-card-title>
+          <v-card
+            class="vehicle-card"
+            @click="viewVehiclesByType('van')"
+            @mouseover="hoverCard($event)"
+            @mouseleave="resetCard($event)"
+          >
+            <v-img src="../assets/Van.jpeg" aspect-ratio="1.7"></v-img>
+            <v-card-title>Van</v-card-title>
+          </v-card>
+        </v-col>
+        <v-col>
+          <v-card
+            class="vehicle-card"
+            @click="viewVehiclesByType('scooter')"
+            @mouseover="hoverCard($event)"
+            @mouseleave="resetCard($event)"
+          >
+            <v-img src="../assets/scooter.jpg" aspect-ratio="1.7"></v-img>
+            <v-card-title>Scooter</v-card-title>
           </v-card>
         </v-col>
       </v-row>
@@ -36,12 +78,44 @@
 
 <script>
 import Calendar from "@/components/Calendar.vue";
+
 export default {
   components: {
     Calendar,
   },
   data() {
-    return {};
+    return {
+      startDate: null,
+      endDate: null,
+      type: null,
+    };
+  },
+  methods: {
+    setStartDate(date) {
+      this.startDate = date;
+    },
+    setEndDate(date) {
+      this.endDate = date;
+    },
+    viewAvailableVehicles() {
+      this.$router.push({
+        name: "AvailableVehicles",
+        params: { startDate: this.startDate, endDate: this.endDate },
+      });
+    },
+    viewVehiclesByType(type) {
+      this.$router.push({
+        name: "VehiclesByType",
+        params: { type },
+      });
+    },
+    hoverCard(event) {
+      event.currentTarget.style.transform = "scale(1.05)";
+      event.currentTarget.style.transition = "transform 0.3s ease";
+    },
+    resetCard(event) {
+      event.currentTarget.style.transform = "scale(1)";
+    },
   },
 };
 </script>
@@ -80,15 +154,23 @@ body {
   margin-top: -5px;
 }
 
-.main button {
-  border: 2px solid #fff;
-  color: #fff;
-  font-size: 16px;
-  padding: 8px 15px;
-  width: 120px;
-  margin-top: 10px;
-  background-color: transparent;
-  border-radius: 4px;
+.text-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: teal; /* Light blue color */
+}
+
+.calendar-card {
+  border: 2px solid #008080; /* Teal border color */
+  padding: 20px;
+}
+
+.vehicle-card {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  overflow: hidden;
 }
 
 .wave {

@@ -11,7 +11,7 @@
           <v-card class="mx-2 my-2 card-size">
             <v-row>
               <v-col cols="12">
-                <v-card-title>{{ vehicle.type }}</v-card-title>
+                <v-card-title>{{ vehicle.title }}</v-card-title>
                 <v-divider class="thick-divider"></v-divider>
               </v-col>
               <v-col cols="4">
@@ -125,15 +125,21 @@ export default {
   },
   mounted() {
     this.fetchVehicles();
-    this.username = JSON.parse(localStorage.getItem("user")).username;
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      this.username = user.username;
+    }
   },
   methods: {
     fetchVehicles() {
-      const companyId = this.$route.params.companyId;
+      const { type } = this.$route.params;
+      console.log(`Fetching vehicles of type: ${type}`);
       axios
-        .get(`http://localhost:5000/vehicles/company/${companyId}`)
+        .get(`http://localhost:5000/vehicles/type/${type}`)
         .then((response) => {
-          this.vehicles = response.data;
+          console.log("Response data:", response.data);
+          this.vehicles = response.data || [];
+          console.log("Vehicles state:", this.vehicles);
           this.checkRentStatus();
         })
         .catch((error) => {
@@ -158,7 +164,7 @@ export default {
     },
     rentVehicle(vehicle) {
       const userId = JSON.parse(localStorage.getItem("user")).id;
-      const companyId = this.$route.params.companyId;
+      const companyId = vehicle.companyId;
       axios
         .post(
           "http://localhost:5000/rents",
@@ -190,6 +196,10 @@ export default {
             console.error("There was an error renting the vehicle!", error);
           }
         });
+    },
+    confirmRental() {
+      this.dialog.show = false;
+      this.$router.push("/");
     },
     getVehicleImage(type) {
       switch (type.toLowerCase()) {
@@ -246,8 +256,6 @@ export default {
 .rent-button {
   font-size: 14px;
   padding: 8px 16px;
-  background-color: #8bc34a; /* Light green color */
-  color: white;
 }
 .pozadina {
   background-color: #e7f6fc;

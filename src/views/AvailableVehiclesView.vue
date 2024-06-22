@@ -125,15 +125,21 @@ export default {
   },
   mounted() {
     this.fetchVehicles();
-    this.username = JSON.parse(localStorage.getItem("user")).username;
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      this.username = user.username;
+    }
   },
   methods: {
     fetchVehicles() {
-      const companyId = this.$route.params.companyId;
+      const { startDate, endDate } = this.$route.params;
       axios
-        .get(`http://localhost:5000/vehicles/company/${companyId}`)
+        .get(`http://localhost:5000/available-vehicles`, {
+          params: { startDate, endDate },
+        })
         .then((response) => {
-          this.vehicles = response.data;
+          this.vehicles = response.data.vehicles;
+          this.rentedVehicleIds = response.data.rentedVehicleIds;
           this.checkRentStatus();
         })
         .catch((error) => {
@@ -158,7 +164,7 @@ export default {
     },
     rentVehicle(vehicle) {
       const userId = JSON.parse(localStorage.getItem("user")).id;
-      const companyId = this.$route.params.companyId;
+      const companyId = vehicle.companyId;
       axios
         .post(
           "http://localhost:5000/rents",
@@ -190,6 +196,10 @@ export default {
             console.error("There was an error renting the vehicle!", error);
           }
         });
+    },
+    confirmRental() {
+      this.dialog.show = false;
+      this.$router.push("/");
     },
     getVehicleImage(type) {
       switch (type.toLowerCase()) {
@@ -246,8 +256,6 @@ export default {
 .rent-button {
   font-size: 14px;
   padding: 8px 16px;
-  background-color: #8bc34a; /* Light green color */
-  color: white;
 }
 .pozadina {
   background-color: #e7f6fc;

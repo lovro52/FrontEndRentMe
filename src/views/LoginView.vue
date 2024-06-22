@@ -6,136 +6,115 @@
           <v-card class="card-border" width="600px" outlined>
             <v-card-title align="left">LOGIN</v-card-title>
             <v-card-subtitle align="left">
-              Deer user, plz login
+              Dear user, please login
             </v-card-subtitle>
             <v-card-text class="card-text-border">
               <v-form v-model="valid">
                 <v-text-field
-                  v-model="email"
+                  v-model="emailOrUsername"
                   dense
-                  label="Email"
-                  clearble
+                  label="Email or Username"
+                  clearable
                   type="text"
-                  :rules="[rules.required, rules.email]"
+                  :rules="[rules.required]"
                   outlined
                 ></v-text-field>
                 <v-text-field
                   v-model="password"
                   dense
                   label="Password"
-                  clearble
+                  clearable
                   :append-icon="showIcon ? 'mdi-eye' : 'mdi-eye-off'"
                   :rules="[rules.required, rules.min]"
                   :type="showIcon ? 'text' : 'password'"
+                  @click:append="showIcon = !showIcon"
                   outlined
                 ></v-text-field>
               </v-form>
-              <v-btn
-                @click="openDialog"
-                class="link-left"
-                text
-                x-small
-                color="blue"
-              >
-                Forgot password?
-              </v-btn>
+              <v-btn @click="login" :disabled="!valid" outlined>OK</v-btn>
             </v-card-text>
-            <v-card-actions class="card-actions">
-              <v-btn @click="login" :disabled="isButtonDisabled" outlined>
-                OK
-              </v-btn>
-            </v-card-actions>
           </v-card>
-          <v-dialog
-            width="300px"
-            outlined
-            persistent
-            v-model="passwordIssuesDialog"
-          >
-            <v-card class="card-border">
-              <v-card-title>E-mail</v-card-title>
-              <v-card-subtitle> Please enter you e-mail </v-card-subtitle>
-              <v-card-text>
-                <v-text-field
-                  v-model="emailForPassword"
-                  dense
-                  label="Email"
-                  clearble
-                  type="text"
-                  :rules="[rules.required, rules.email]"
-                  outlined
-                ></v-text-field>
-              </v-card-text>
-              <v-card-actions class="card-actions">
-                <v-btn
-                  class="btn-right-margin"
-                  color="red darken-3"
-                  outlined
-                  text
-                  small
-                  @click="closeDialog"
-                >
-                  CLOSE
-                </v-btn>
-                <v-btn outlined text @click="resetPassword(emailForPassword)">
-                  SEND
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
         </v-col>
       </v-row>
+      <v-snackbar v-model="snackbar.show" :color="snackbar.color" top>
+        {{ snackbar.message }}
+        <v-btn color="white" text @click="snackbar.show = false">Close</v-btn>
+      </v-snackbar>
     </v-container>
   </v-app>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "LoginView",
-  components: {},
-  watch: {
-    valid: function (newVal, oldVal) {
-      if (newVal != true) {
-        this.isButtonDisabled = true;
-      } else {
-        this.isButtonDisabled = false;
-      }
-    },
-  },
   data() {
     return {
-      emailForPassword: null,
-      passwordIssuesDialog: false,
-      isButtonDisabled: false,
-      valid: true,
-      email: null,
-      password: null,
+      valid: false,
+      emailOrUsername: "",
+      password: "",
       showIcon: false,
+      snackbar: {
+        show: false,
+        message: "",
+        color: "",
+      },
       rules: {
         required: (value) => !!value || "Required.",
-        min: (v) => v?.length >= 6 || "Min 6 characters",
-        email: (v) =>
-          !v ||
-          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-          "E-mail must be valid",
+        min: (value) => value.length >= 6 || "Min 6 characters",
       },
     };
   },
   methods: {
     login() {
-      let email = this.email;
-      let password = this.password;
+      axios
+        .post("http://localhost:5000/login", {
+          emailOrUsername: this.emailOrUsername,
+          password: this.password,
+        })
+        .then((response) => {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+          this.snackbar.message = "Login successful!";
+          this.snackbar.color = "success";
+          this.snackbar.show = true;
+          setTimeout(() => {
+            if (response.data.user.role === "company") {
+              this.$router.push("/profile");
+            } else {
+              this.$router.push("/");
+            }
+            this.$emit("user-logged-in");
+          }, 1000);
+        })
+        .catch((err) => {
+          this.snackbar.message =
+            "Login failed. Please check your credentials.";
+          this.snackbar.color = "error";
+          this.snackbar.show = true;
+          console.error(err);
+        });
     },
   },
-  created() {},
-  mounted() {},
-  destroyed() {},
 };
 </script>
 
 <style scoped>
 .pozadina {
-  /* Lighter coral color with reduced RGB values */
   background-color: #e7f6fc;
+}
+.card-border {
+  padding: 2%;
+}
+.card-text-border {
+  padding: 2.5%;
+}
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.btn-right-margin {
+  margin-right: 2%;
 }
 </style>

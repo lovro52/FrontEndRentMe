@@ -5,6 +5,10 @@ import RegisterView from "../views/RegisterView";
 import LoginView from "../views/LoginView";
 import OurCompanies from "../views/OurCompanies";
 import OurVozila from "../views/OurVozilaView";
+import Profile from "../views/Profile.vue";
+import AvailableVehiclesView from "../views/AvailableVehiclesView.vue";
+import VehiclesByTypeView from "../views/VehiclesByTypeView.vue";
+//import { Auth } from "@/services";
 Vue.use(VueRouter);
 
 const routes = [
@@ -14,13 +18,10 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: "/VehiclesByType/type/:type",
+    name: "VehiclesByType",
+    component: VehiclesByTypeView,
+    props: true,
   },
   {
     path: "/register",
@@ -38,9 +39,23 @@ const routes = [
     component: OurCompanies,
   },
   {
-    path: "/OurVozila",
+    path: "/OurVozila/:companyId",
     name: "OurVozila",
     component: OurVozila,
+  },
+  {
+    path: "/profile",
+    name: "Profile ",
+    component: Profile,
+  },
+  {
+    path: "/available-vehicles",
+    name: "AvailableVehicles",
+    component: AvailableVehiclesView,
+    props: (route) => ({
+      startDate: route.params.startDate,
+      endDate: route.params.endDate,
+    }),
   },
 ];
 
@@ -50,4 +65,18 @@ const router = new VueRouter({
   routes,
 });
 
+// izvrši prije svake rute
+// router.beforeEach((to, from, next) => {
+//   redirect to login page if not logged in and trying to access a restricted
+//   page;
+//   const publicPages = ["/login", "/register"];
+//   const authRequired = !publicPages.includes(to.path);
+//   const user = Auth.getUser();
+
+//   ako je potreban login, ali nema korisnika
+//   if (authRequired && !user) {
+//     return next("/login");
+//   }
+//   next();
+// });
 export default router;

@@ -30,6 +30,7 @@
           id="example-datepicker-1"
           v-model="startDate"
           class="mb-2"
+          @input="updateStartDate"
         ></b-form-datepicker>
         <p>Selected Start Date: '{{ startDate }}'</p>
       </div>
@@ -41,6 +42,7 @@
           id="example-datepicker-2"
           v-model="endDate"
           class="mb-2"
+          @input="updateEndDate"
         ></b-form-datepicker>
         <p>Selected End Date: '{{ endDate }}'</p>
       </div>
@@ -69,6 +71,12 @@ export default {
   methods: {
     selectVehicle(vehicle) {
       this.selectedVehicle = vehicle;
+    },
+    updateStartDate() {
+      this.$emit("update:startDate", this.startDate);
+    },
+    updateEndDate() {
+      this.$emit("update:endDate", this.endDate);
     },
     getDaysDifference(start, end) {
       if (start && end) {
