@@ -154,7 +154,7 @@ export default {
       };
 
       axios
-        .post("http://localhost:5000/register", payload)
+        .post("https://backendrentme.onrender.com/register", payload)
         .then((response) => {
           this.snackbar.message = "Registration successful!";
           this.snackbar.color = "success";

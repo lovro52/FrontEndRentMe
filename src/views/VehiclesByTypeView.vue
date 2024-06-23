@@ -135,7 +135,7 @@ export default {
       const { type } = this.$route.params;
       console.log(`Fetching vehicles of type: ${type}`);
       axios
-        .get(`http://localhost:5000/vehicles/type/${type}`)
+        .get(`https://backendrentme.onrender.com/vehicles/type/${type}`)
         .then((response) => {
           console.log("Response data:", response.data);
           this.vehicles = response.data || [];
@@ -148,7 +148,7 @@ export default {
     },
     checkRentStatus() {
       axios
-        .get("http://localhost:5000/rents")
+        .get("https://backendrentme.onrender.com/rents")
         .then((response) => {
           this.rentedVehicleIds = response.data.map(
             (rent) => rent.vehicleId._id
@@ -167,7 +167,7 @@ export default {
       const companyId = vehicle.companyId;
       axios
         .post(
-          "http://localhost:5000/rents",
+          "https://backendrentme.onrender.com/rents",
           {
             userId,
             vehicleId: vehicle._id,

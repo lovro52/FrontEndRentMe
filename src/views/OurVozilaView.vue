@@ -131,7 +131,7 @@ export default {
     fetchVehicles() {
       const companyId = this.$route.params.companyId;
       axios
-        .get(`http://localhost:5000/vehicles/company/${companyId}`)
+        .get(`https://backendrentme.onrender.com/vehicles/company/${companyId}`)
         .then((response) => {
           this.vehicles = response.data;
           this.checkRentStatus();
@@ -142,7 +142,7 @@ export default {
     },
     checkRentStatus() {
       axios
-        .get("http://localhost:5000/rents")
+        .get("https://backendrentme.onrender.com/rents")
         .then((response) => {
           this.rentedVehicleIds = response.data.map(
             (rent) => rent.vehicleId._id
@@ -161,7 +161,7 @@ export default {
       const companyId = this.$route.params.companyId;
       axios
         .post(
-          "http://localhost:5000/rents",
+          "https://backendrentme.onrender.com/rents",
           {
             userId,
             vehicleId: vehicle._id,

@@ -238,7 +238,7 @@ export default {
   methods: {
     fetchProfile() {
       axios
-        .get("http://localhost:5000/profile", {
+        .get("https://backendrentme.onrender.com/profile", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -259,7 +259,7 @@ export default {
     fetchVehicles() {
       const companyId = this.user.company.id;
       axios
-        .get(`http://localhost:5000/vehicles/company/${companyId}`)
+        .get(`https://backendrentme.onrender.com/vehicles/company/${companyId}`)
         .then((response) => {
           this.vehicles = response.data;
           this.checkRentStatus();
@@ -270,7 +270,7 @@ export default {
     },
     checkRentStatus() {
       axios
-        .get("http://localhost:5000/rents")
+        .get("https://backendrentme.onrender.com/rents")
         .then((response) => {
           this.rentedVehicleIds = response.data.map(
             (rent) => rent.vehicleId._id
@@ -303,7 +303,7 @@ export default {
       };
 
       axios
-        .post("http://localhost:5000/vehicles", payload)
+        .post("https://backendrentme.onrender.com/vehicles", payload)
         .then((response) => {
           this.dialog.show = false;
           this.fetchVehicles(); // Refresh the vehicle list to show the new vehicle
@@ -325,7 +325,7 @@ export default {
     },
     deleteVehicle(vehicleId) {
       axios
-        .delete(`http://localhost:5000/vehicles/${vehicleId}`, {
+        .delete(`https://backendrentme.onrender.com/vehicles/${vehicleId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -341,7 +341,7 @@ export default {
     },
     deleteRent(rentId) {
       axios
-        .delete(`http://localhost:5000/rents/${rentId}`, {
+        .delete(`https://backendrentme.onrender.com/rents/${rentId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

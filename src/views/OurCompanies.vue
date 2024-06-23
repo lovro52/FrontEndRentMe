@@ -52,7 +52,7 @@ export default {
   methods: {
     fetchCompanies() {
       axios
-        .get("http://localhost:5000/companies")
+        .get("https://backendrentme.onrender.com/companies")
         .then((response) => {
           this.companies = response.data;
         })
