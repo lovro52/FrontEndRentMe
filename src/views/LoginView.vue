@@ -68,7 +68,7 @@ export default {
   methods: {
     login() {
       axios
-        .post("http://localhost:5000/login", {
+        .post("https://backendrentme.onrender.com/login", {
           emailOrUsername: this.emailOrUsername,
           password: this.password,
         })
